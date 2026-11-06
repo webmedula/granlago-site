@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import fonteDisplay from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url';
+import fonteTexto from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 
 interface Props {
   titulo?: string;
@@ -52,6 +54,8 @@ const schema = {
     <meta name="theme-color" content="#eef0ea" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0d1712" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="preload" href={fonteDisplay} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fonteTexto} as="font" type="font/woff2" crossorigin />
     {site.googleVerification && <meta name="google-site-verification" content={site.googleVerification} />}
 
     <meta property="og:type" content="website" />
@@ -86,6 +90,7 @@ const schema = {
     )}
   </head>
   <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
     {site.gtm && (
       <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${site.gtm}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     )}

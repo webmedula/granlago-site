@@ -40,7 +40,7 @@ import { obras, atualizadoEm } from '../data/obras';
   .obras-etapa ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
   .obras-etapa li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; font-size: 0.95rem; }
   .obras-prazo { color: var(--fg-soft); font-size: 0.84rem; white-space: nowrap; }
-  .obras-pct { display: inline-flex; align-items: center; gap: 10px; color: var(--acento-texto); font-size: 0.84rem; font-weight: 600; white-space: nowrap; }
+  .obras-pct { font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: 10px; color: var(--acento-texto); font-size: 0.84rem; font-weight: 600; white-space: nowrap; }
   .obras-barra { width: 48px; height: 3px; }
   .obras-barra span { display: block; height: 100%; border-radius: 3px; background: currentColor; transform-origin: left; transform: scaleX(var(--p)); }
   @media (max-width: 1000px) { .obras-lista { grid-template-columns: 1fr 1fr; } }

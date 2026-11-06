@@ -8,7 +8,7 @@ import Foto from './Foto.astro';
       <h2 data-reveal>Mais de 40 itens de lazer para viver todos os dias</h2>
       <p class="lead" data-reveal>Agrupados em seis ambientes, do lago às quadras.</p>
     </div>
-    <div class="lazer-trilho" data-lazer-trilho>
+    <div class="lazer-trilho" data-lazer-trilho tabindex="0" role="region" aria-label="Ambientes de lazer, role para o lado">
       {lazer.map((g) => (
         <article class="lazer-card">
           <Foto src={g.imagem} alt={`${g.tema}: ${g.titulo}`} class="lazer-foto" />

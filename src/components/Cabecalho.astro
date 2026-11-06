@@ -45,7 +45,7 @@ const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(sit
     box-shadow: 0 1px 0 var(--line);
   }
   .cab.oculto { transform: translateY(-100%); }
-  .cab-in { display: flex; align-items: center; gap: 28px; max-width: 1440px; height: 72px; margin: 0 auto; padding: 0 var(--gutter); }
+  .cab-in { display: flex; align-items: center; gap: 28px; max-width: 1440px; height: 72px; margin: 0 auto; padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left)); }
   .cab-logo { text-decoration: none; }
   .cab-nav { margin-left: auto; }
   .cab-nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
@@ -58,7 +58,7 @@ const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(sit
 
   .movel {
     position: fixed; inset: 0; z-index: var(--z-menu); background: var(--bg); color: var(--fg);
-    display: flex; flex-direction: column; justify-content: center; gap: 40px; padding: 100px var(--gutter) 40px;
+    display: flex; flex-direction: column; justify-content: center; gap: 40px; padding: 100px max(var(--gutter), env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); overscroll-behavior: contain; overflow-y: auto;
   }
   .movel[hidden] { display: none; }
   .movel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }

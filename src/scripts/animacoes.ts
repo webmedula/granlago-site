@@ -104,7 +104,44 @@ const dataLayer = () => ((window as any).dataLayer ||= []) as unknown[];
 $$('[data-evento]').forEach((el) =>
   el.addEventListener('click', () => dataLayer().push({ event: 'clique_cta', cta: el.dataset.evento })),
 );
-$('[data-form]')?.addEventListener('submit', () => dataLayer().push({ event: 'lead_formulario' }));
+
+/* ---------- Formulário: validação na linha, foco no primeiro erro, estado de envio ---------- */
+const form = $<HTMLFormElement>('[data-form]');
+if (form) {
+  const campos = $$<HTMLInputElement>('input[required]', form);
+  const validar = (inp: HTMLInputElement) => {
+    const erro = inp.getAttribute('aria-describedby') ? $('#' + inp.getAttribute('aria-describedby')) : null;
+    const ok = inp.checkValidity();
+    inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    if (erro) erro.textContent = ok ? '' : erro.dataset.erro || '';
+    return ok;
+  };
+  campos.forEach((inp) => {
+    inp.addEventListener('blur', () => inp.value && validar(inp));
+    inp.addEventListener('input', () => inp.getAttribute('aria-invalid') === 'true' && validar(inp));
+    inp.addEventListener('change', () => inp.type === 'checkbox' && validar(inp));
+  });
+  form.addEventListener('submit', (e) => {
+    const invalidos = campos.filter((inp) => !validar(inp));
+    if (invalidos.length) {
+      e.preventDefault();
+      invalidos[0].focus();
+      return;
+    }
+    const botao = $<HTMLButtonElement>('[data-enviar]', form);
+    const texto = $('[data-enviar-texto]', form);
+    if (botao) botao.disabled = true;
+    if (texto) texto.textContent = 'Enviando…';
+    dataLayer().push({ event: 'lead_formulario' });
+  });
+  // Ao voltar pelo histórico, reabilita o botão
+  window.addEventListener('pageshow', () => {
+    const botao = $<HTMLButtonElement>('[data-enviar]', form);
+    const texto = $('[data-enviar-texto]', form);
+    if (botao) botao.disabled = false;
+    if (texto) texto.textContent = 'Enviar';
+  });
+}
 
 /* ---------- WhatsApp flutuante: escondido no hero e no contato ---------- */
 const wa = $('[data-wa]');
@@ -186,12 +223,29 @@ if (movimento) {
     });
   }
 
-  // Revelações genéricas ao rolar
-  ScrollTrigger.batch('[data-reveal]', {
-    start: 'top 88%',
-    once: true,
-    onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.1, overwrite: true }),
-  });
+  // Revelações ao entrar na tela. IntersectionObserver funciona com qualquer rolagem,
+  // inclusive saltos (foco em campo, link direto para âncora).
+  const fila: Element[] = [];
+  let agendado = false;
+  const revelar = () => {
+    gsap.to(fila.splice(0), { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.08, overwrite: true });
+    agendado = false;
+  };
+  const io = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        fila.push(en.target);
+      });
+      if (fila.length && !agendado) {
+        agendado = true;
+        requestAnimationFrame(revelar);
+      }
+    },
+    { rootMargin: '0px 0px -8% 0px' },
+  );
+  $$('[data-reveal]').forEach((el) => io.observe(el));
 
   // Manifesto: palavras acendem conforme a rolagem
   $$('[data-palavras]').forEach((el) => {

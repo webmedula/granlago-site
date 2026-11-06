@@ -60,7 +60,8 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+@media (pointer: fine) { html { overscroll-behavior: none; } }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
@@ -78,6 +79,16 @@ body {
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 button { font: inherit; }
+a, button, input, label { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+section[id] { scroll-margin-top: 88px; }
+
+.pular {
+  position: fixed; left: 16px; top: 12px; z-index: 100; padding: 12px 18px; border-radius: 999px;
+  background: var(--mata); color: var(--mata-fg); font-weight: 600; text-decoration: none;
+  transform: translateY(-160%); transition: transform 0.3s var(--ease);
+}
+.pular:focus-visible { transform: none; }
+main:focus:not(:focus-visible) { outline: none; }
 svg { flex: none; }
 
 h1, h2, h3 {

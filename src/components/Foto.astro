@@ -5,15 +5,19 @@ interface Props {
   alt: string;
   class?: string;
   eager?: boolean;
+  largura?: number;
+  altura?: number;
   sizes?: string;
   [key: string]: any;
 }
-const { src, alt, class: cls = '', eager = false, ...rest } = Astro.props;
+const { src, alt, class: cls = '', eager = false, largura = 1600, altura = 1200, ...rest } = Astro.props;
 ---
 <div class:list={['foto img-ph', cls]} {...rest}>
   <img
     src={src}
     alt={alt}
+    width={largura}
+    height={altura}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : 'auto'}
     decoding="async"

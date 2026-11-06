@@ -3,7 +3,7 @@
 interface Props { class?: string }
 const { class: cls } = Astro.props;
 ---
-<span class:list={['logo', cls]}>
+<span class:list={['logo', cls]} translate="no">
   <span class="logo-nome">Gran<em>Lago</em></span>
   <span class="logo-sub">Condomínio Horizontal</span>
 </span>
