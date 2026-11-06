@@ -1,0 +1,37 @@
+---
+import Foto from './Foto.astro';
+import Icone from './Icone.astro';
+---
+<section class="local secao escura" id="localizacao">
+  <div class="container local-grid">
+    <div class="local-texto">
+      <p class="eyebrow" data-reveal>Localização · GO-020</p>
+      <h2 data-reveal>A região que dita um novo nível no jeito de viver</h2>
+      <p class="lead" data-reveal>
+        A GO-020 é hoje um dos eixos mais consolidados de alto padrão em Goiânia, reunindo infraestrutura, mobilidade e valorização contínua.
+      </p>
+      <div class="local-numero" data-reveal>
+        <strong><span data-contador="93">93</span>%</strong>
+        <p>de valorização média dos lotes em condomínios horizontais no eixo da GO-020, entre 2019 e 2024.*</p>
+      </div>
+      <p class="local-fonte" data-reveal>* Levantamento do setor. Fonte: CONFIRMAR antes de publicar.</p>
+      <a class="botao contorno" href="https://www.google.com/maps/search/?api=1&query=Gran+Lago+Condom%C3%ADnio+Horizontal+GO-020" target="_blank" rel="noopener" data-reveal>
+        <Icone nome="mapa" /> Ver no Google Maps
+      </a>
+    </div>
+    <div class="local-mapa" data-reveal="fade">
+      <Foto src="/img/mapa.webp" alt="Mapa da localização do Gran Lago na GO-020" class="local-foto" data-parallax="-8" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .local-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .local-texto { display: grid; gap: 24px; justify-items: start; }
+  .local-numero { display: flex; gap: 22px; align-items: center; padding: 22px 0; border-block: 1px solid rgba(243,238,228,0.15); width: 100%; }
+  .local-numero strong { font-family: var(--serif); font-weight: 300; font-size: clamp(3.6rem, 8vw, 6rem); line-height: 1; color: var(--ouro-claro); }
+  .local-numero p { font-size: 0.95rem; color: rgba(243,238,228,0.8); max-width: 30ch; }
+  .local-fonte { font-size: 0.75rem; color: rgba(243,238,228,0.5); }
+  .local-mapa :global(.local-foto) { border-radius: var(--raio); aspect-ratio: 4 / 3.2; }
+  @media (max-width: 900px) { .local-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,103 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  imagem?: string;
+}
+const { titulo = site.titulo, descricao = site.descricao, imagem = '/img/og.jpg' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(imagem, site.url).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Place',
+      '@id': `${site.url}/#empreendimento`,
+      name: site.nomeCompleto,
+      description: site.descricao,
+      url: site.url,
+      image: ogImage,
+      address: { '@type': 'PostalAddress', addressRegion: 'GO', addressCountry: 'BR', streetAddress: 'GO-020' },
+    },
+    {
+      '@type': 'RealEstateAgent',
+      name: 'Central de Vendas Gran Lago',
+      url: site.url,
+      telephone: site.contato.telefoneVendasLink,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Av. 136, Qd. F-42-A, Lt. 45, Setor Sul',
+        addressLocality: 'Goiânia',
+        addressRegion: 'GO',
+        postalCode: '74093-250',
+        addressCountry: 'BR',
+      },
+      parentOrganization: { '@type': 'Organization', name: 'Urbanizamos', url: site.links.urbanizamos },
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0c231c" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    {site.googleVerification && <meta name="google-site-verification" content={site.googleVerification} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.nomeCompleto} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js-anim');
+      }
+    </script>
+
+    <slot name="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+    {site.gtm && (
+      <script is:inline define:vars={{ gtm: site.gtm }}>
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', gtm);
+      </script>
+    )}
+  </head>
+  <body>
+    {site.gtm && (
+      <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${site.gtm}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    )}
+    <slot />
+    <script>
+      import '../scripts/animacoes.ts';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cabecalho from '../../components/Cabecalho.astro';
+import Obras from '../../components/Obras.astro';
+import Rodape from '../../components/Rodape.astro';
+import WhatsAppFlutuante from '../../components/WhatsAppFlutuante.astro';
+---
+<Base titulo="Obras | Gran Lago Condomínio Horizontal" descricao="Acompanhe o andamento das obras do Gran Lago Condomínio Horizontal: infraestrutura, obra civil, lazer e extramuros.">
+  <Cabecalho />
+  <main class="pagina-escura">
+    <h1 class="sr-only">Obras do Gran Lago</h1>
+    <Obras />
+  </main>
+  <Rodape />
+  <WhatsAppFlutuante />
+</Base>
+<style is:global>
+  .pagina-escura { background: var(--verde-900); padding-top: 60px; }
+</style>

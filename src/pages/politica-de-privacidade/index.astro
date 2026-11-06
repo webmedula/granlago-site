@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cabecalho from '../../components/Cabecalho.astro';
+import Rodape from '../../components/Rodape.astro';
+import { site } from '../../data/site';
+---
+<Base titulo="Política de privacidade | Gran Lago" descricao="Como o Gran Lago Condomínio Horizontal trata os dados pessoais enviados pelo site.">
+  <Cabecalho />
+  <main class="pagina">
+    <article class="container texto-legal">
+      <p class="eyebrow">Política de privacidade</p>
+      <h1>Como tratamos seus dados</h1>
+      <p><strong>Modelo inicial. Revisar com o jurídico da Urbanizamos antes de publicar.</strong></p>
+      <h2>Quais dados coletamos</h2>
+      <p>Pelo formulário de contato coletamos nome, e-mail e telefone. Também usamos cookies de medição (Google Tag Manager e ferramentas associadas) para entender o uso do site.</p>
+      <h2>Para que usamos</h2>
+      <p>Para responder ao seu pedido de informações sobre o {site.nomeCompleto}, enviar novidades do empreendimento e melhorar o site. A base legal é o seu consentimento, dado ao marcar a caixa de aceite.</p>
+      <h2>Com quem compartilhamos</h2>
+      <p>Com a equipe comercial responsável pelas vendas e com fornecedores de tecnologia necessários para operar o site e o atendimento. Não vendemos seus dados.</p>
+      <h2>Seus direitos</h2>
+      <p>Você pode pedir acesso, correção ou exclusão dos seus dados, ou retirar o consentimento, pelo telefone {site.contato.telefoneRelacionamento}.</p>
+      <h2>Responsável</h2>
+      <p>Vale do Jordão Empreendimentos LTDA, CNPJ 50.215.980/0001-18.</p>
+    </article>
+  </main>
+  <Rodape />
+</Base>
+<style is:global>
+  .pagina { padding-top: 120px; }
+  body:has(.pagina) .cab:not(.solido) { color: var(--verde-900); }
+  .texto-legal { max-width: 760px; display: grid; gap: 16px; padding-block: 40px 100px; }
+  .texto-legal h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin-bottom: 12px; }
+  .texto-legal h2 { font-size: 1.6rem; margin-top: 24px; }
+  .texto-legal p { color: var(--tinta-suave); }
+</style>

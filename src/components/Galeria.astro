@@ -1,0 +1,54 @@
+---
+import { galeria } from '../data/site';
+interface Props { limite?: number; titulo?: boolean }
+const { limite = 9, titulo = true } = Astro.props;
+const itens = galeria.slice(0, limite);
+---
+<section class="gal secao" id="galeria">
+  <div class="container">
+    {titulo && (
+      <div class="gal-topo">
+        <div>
+          <p class="eyebrow" data-reveal>Galeria</p>
+          <h2 data-reveal>Cada detalhe, desenhado com cuidado</h2>
+        </div>
+        {limite < galeria.length && <a class="botao contorno" href="/galeria/" data-reveal>Ver as {galeria.length} imagens</a>}
+      </div>
+    )}
+    <div class="gal-grid" data-galeria>
+      {itens.map((g, i) => (
+        <button class="gal-item img-ph" data-reveal style={`--d:${i % 3}`} data-lightbox={g.src} aria-label={`Ampliar: ${g.alt}`}>
+          <img src={g.src} alt={g.alt} loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<dialog class="lb" data-lightbox-dialog aria-label="Imagem ampliada">
+  <img alt="" data-lightbox-img />
+  <button class="lb-fechar" data-lightbox-fechar aria-label="Fechar">×</button>
+  <button class="lb-nav lb-ant" data-lightbox-ant aria-label="Imagem anterior">‹</button>
+  <button class="lb-nav lb-prox" data-lightbox-prox aria-label="Próxima imagem">›</button>
+</dialog>
+
+<style>
+  .gal-topo { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(40px, 6vw, 64px); flex-wrap: wrap; }
+  .gal-topo > div { display: grid; gap: 18px; }
+  .gal-grid { columns: 3 280px; column-gap: 16px; }
+  .gal-item { display: block; width: 100%; margin: 0 0 16px; padding: 0; border: 0; border-radius: 14px; overflow: hidden; cursor: zoom-in; break-inside: avoid; min-height: 200px; }
+  .gal-item:nth-child(3n + 1) { aspect-ratio: 4 / 5; }
+  .gal-item:nth-child(3n + 2) { aspect-ratio: 1; }
+  .gal-item:nth-child(3n) { aspect-ratio: 4 / 3; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+  .gal-item:hover img { transform: scale(1.05); }
+
+  .lb { border: 0; padding: 0; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; background: rgba(12,35,28,0.96); }
+  .lb[open] { display: grid; place-items: center; }
+  .lb::backdrop { background: rgba(12,35,28,0.9); }
+  .lb img { max-width: 92vw; max-height: 86vh; object-fit: contain; border-radius: 8px; }
+  .lb button { position: absolute; background: none; border: 0; color: var(--areia); font-size: 2.6rem; width: 56px; height: 56px; cursor: pointer; line-height: 1; }
+  .lb-fechar { top: 16px; right: 16px; }
+  .lb-ant { left: 8px; top: 50%; translate: 0 -50%; }
+  .lb-prox { right: 8px; top: 50%; translate: 0 -50%; }
+</style>

@@ -1,0 +1,58 @@
+---
+import { diferenciais, assinaturas, site } from '../data/site';
+import Foto from './Foto.astro';
+---
+<section class="dif secao" id="diferenciais">
+  <div class="container">
+    <div class="dif-topo">
+      <p class="eyebrow" data-reveal>Diferenciais</p>
+      <h2 data-reveal>Pensado para durar e valorizar</h2>
+    </div>
+    <div class="dif-grid">
+      {diferenciais.map((d, i) => (
+        <article class="dif-card" data-reveal style={`--d:${i}`}>
+          <Foto src={d.imagem} alt="" class="dif-foto" />
+          <h3>{d.titulo}</h3>
+          <p>{d.texto}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="assin">
+      <p class="eyebrow" data-reveal>Assinaturas</p>
+      <div class="assin-grid">
+        {assinaturas.map((a) => (
+          <article class="assin-card" data-reveal>
+            <span class="assin-papel">{a.papel}</span>
+            <h3>{a.nome}</h3>
+            <p>{a.texto}</p>
+          </article>
+        ))}
+        <article class="assin-card" data-reveal>
+          <span class="assin-papel">Realização</span>
+          <h3>Urbanizamos</h3>
+          <p>Urbanizadora responsável pelo desenvolvimento do Gran Lago. <a href={site.links.urbanizamos} target="_blank" rel="noopener">urbanizamos.com.br</a></p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dif-topo { display: grid; gap: 18px; margin-bottom: clamp(40px, 6vw, 72px); }
+  .dif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .dif-card { display: grid; gap: 14px; align-content: start; }
+  .dif-card :global(.dif-foto) { aspect-ratio: 4 / 3; border-radius: var(--raio); margin-bottom: 8px; }
+  .dif-card p { color: var(--tinta-suave); }
+  .assin { margin-top: clamp(80px, 10vw, 140px); display: grid; gap: 28px; }
+  .assin-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(19,32,27,0.15); }
+  .assin-card { padding: 28px 28px 0 0; display: grid; gap: 10px; align-content: start; }
+  .assin-card + .assin-card { padding-left: 28px; border-left: 1px solid rgba(19,32,27,0.15); }
+  .assin-papel { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--lago); }
+  .assin-card p { color: var(--tinta-suave); font-size: 0.95rem; }
+  @media (max-width: 900px) {
+    .dif-grid, .assin-grid { grid-template-columns: 1fr; }
+    .assin-card + .assin-card { padding-left: 0; border-left: 0; border-top: 1px solid rgba(19,32,27,0.15); }
+    .assin-card { padding: 24px 0; }
+  }
+</style>

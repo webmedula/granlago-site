@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cabecalho from '../../components/Cabecalho.astro';
+import Galeria from '../../components/Galeria.astro';
+import Rodape from '../../components/Rodape.astro';
+import WhatsAppFlutuante from '../../components/WhatsAppFlutuante.astro';
+---
+<Base titulo="Galeria | Gran Lago Condomínio Horizontal" descricao="Veja as perspectivas do Gran Lago Condomínio Horizontal: lago, paisagismo biofílico, áreas de lazer e convivência.">
+  <Cabecalho />
+  <main class="pagina">
+    <header class="container pagina-topo">
+      <p class="eyebrow">Galeria</p>
+      <h1>Imagens do Gran Lago</h1>
+    </header>
+    <Galeria limite={30} titulo={false} />
+  </main>
+  <Rodape />
+  <WhatsAppFlutuante />
+</Base>
+<style is:global>
+  .pagina { padding-top: 120px; }
+  .pagina .cab { color: var(--verde-900); }
+  .pagina-topo { display: grid; gap: 18px; padding-top: 40px; }
+  .pagina-topo h1 { font-size: clamp(2.6rem, 6vw, 5rem); }
+  body:has(.pagina) .cab:not(.solido) { color: var(--verde-900); }
+</style>

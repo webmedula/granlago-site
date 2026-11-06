@@ -1,0 +1,37 @@
+---
+import { site, menu } from '../data/site';
+import Logo from './Logo.astro';
+import Icone from './Icone.astro';
+---
+<footer class="rod escura">
+  <div class="container">
+    <div class="rod-topo">
+      <Logo class="rod-logo" />
+      <nav aria-label="Rodapé"><ul>{menu.map((m) => <li><a href={m.href}>{m.label}</a></li>)}</ul></nav>
+      <a class="rod-insta" href={site.contato.instagram} target="_blank" rel="noopener" aria-label="Instagram da Urbanizamos"><Icone nome="instagram" /></a>
+    </div>
+    <div class="rod-marcas">
+      <span>Realização</span>
+      <a href={site.links.urbanizamos} target="_blank" rel="noopener">Urbanizamos</a>
+      <span>Vendas</span>
+      <a href={site.links.vgv} target="_blank" rel="noopener">VGV+</a>
+    </div>
+    <p class="rod-legal">{site.legal}</p>
+    <p class="rod-copy">© {new Date().getFullYear()} {site.nomeCompleto} · <a href="/politica-de-privacidade/">Política de privacidade</a></p>
+  </div>
+</footer>
+
+<style>
+  .rod { padding-block: 72px 40px; }
+  .rod-topo { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(243,238,228,0.12); }
+  .rod-topo nav { margin-left: auto; }
+  .rod-topo ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; }
+  .rod-topo a { text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+  .rod-topo a:hover { opacity: 1; }
+  .rod-insta :global(svg) { width: 24px; height: 24px; }
+  .rod-marcas { display: flex; align-items: baseline; gap: 10px 18px; flex-wrap: wrap; padding: 28px 0; font-size: 0.8rem; }
+  .rod-marcas span { text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.5; }
+  .rod-marcas a { font-family: var(--serif); font-size: 1.3rem; text-decoration: none; margin-right: 24px; }
+  .rod-legal { font-size: 0.75rem; line-height: 1.6; opacity: 0.55; max-width: 110ch; }
+  .rod-copy { font-size: 0.8rem; opacity: 0.6; margin-top: 24px; }
+</style>

@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+import Icone from './Icone.astro';
+const c = site.contato;
+const wa = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(c.whatsappMensagem)}`;
+const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(c.enderecoVendas)}&output=embed`;
+---
+<section class="contato secao" id="contato">
+  <div class="container contato-grid">
+    <div class="contato-texto">
+      <p class="eyebrow" data-reveal>Contato</p>
+      <h2 data-reveal>Venha conhecer o Gran Lago</h2>
+      <p class="lead" data-reveal>Deixe seus dados e um consultor fala com você, ou chame direto no WhatsApp.</p>
+
+      <ul class="contato-canais" data-reveal>
+        <li>
+          <a href={wa} target="_blank" rel="noopener" data-evento="whatsapp_contato"><Icone nome="whatsapp" /><span><strong>WhatsApp de vendas</strong>{c.telefoneVendas}</span></a>
+        </li>
+        <li>
+          <a href={`tel:${c.telefoneRelacionamentoLink}`} data-evento="telefone_relacionamento"><Icone nome="telefone" /><span><strong>Relacionamento com o cliente</strong>{c.telefoneRelacionamento} · {c.horarioRelacionamento}</span></a>
+        </li>
+        <li>
+          <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.enderecoVendas)}`} target="_blank" rel="noopener"><Icone nome="mapa" /><span><strong>Central de vendas</strong>{c.enderecoVendas}</span></a>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" name="contato" method="POST" action="/obrigado/" data-netlify="true" netlify-honeypot="empresa" data-reveal data-form>
+      <input type="hidden" name="form-name" value="contato" />
+      <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+      <h3>Quero receber informações</h3>
+      <label class="campo"><span>Nome</span><input name="nome" required autocomplete="name" /></label>
+      <label class="campo"><span>E-mail</span><input name="email" type="email" required autocomplete="email" /></label>
+      <label class="campo"><span>Telefone / WhatsApp</span><input name="telefone" type="tel" required autocomplete="tel" inputmode="tel" data-mascara-telefone /></label>
+      <label class="aceite">
+        <input type="checkbox" name="aceite" required />
+        <span>Concordo com a <a href="/politica-de-privacidade/" target="_blank">política de privacidade</a> e aceito ser contatado.</span>
+      </label>
+      <button class="botao verde" type="submit">Enviar <Icone nome="seta" /></button>
+    </form>
+  </div>
+
+  <div class="container">
+    <iframe class="contato-mapa" title="Mapa da central de vendas Gran Lago" src={mapaEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-reveal="fade"></iframe>
+  </div>
+</section>
+
+<style>
+  .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .contato-texto { display: grid; gap: 22px; }
+  .contato-canais { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+  .contato-canais a { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; text-decoration: none; border-top: 1px solid rgba(19,32,27,0.12); }
+  .contato-canais :global(svg) { width: 24px; height: 24px; flex: none; color: var(--lago); margin-top: 2px; }
+  .contato-canais span { display: grid; font-size: 0.95rem; color: var(--tinta-suave); }
+  .contato-canais strong { color: var(--tinta); font-weight: 700; }
+  .contato-canais a:hover strong { color: var(--lago); }
+
+  .form { background: var(--branco); border-radius: 24px; padding: clamp(24px, 4vw, 44px); display: grid; gap: 18px; box-shadow: 0 30px 80px -40px rgba(12,35,28,0.35); }
+  .form h3 { margin-bottom: 6px; }
+  .campo { display: grid; gap: 6px; font-size: 0.85rem; font-weight: 700; }
+  .campo input { font: inherit; font-weight: 400; font-size: 1rem; min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--areia-2); background: var(--areia); color: var(--tinta); transition: border-color 0.3s, background 0.3s; }
+  .campo input:focus { outline: none; border-color: var(--lago); background: var(--branco); }
+  .aceite { display: flex; gap: 12px; align-items: flex-start; font-size: 0.85rem; color: var(--tinta-suave); }
+  .aceite input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--verde-700); flex: none; }
+  .form .botao { justify-self: start; margin-top: 4px; }
+  .contato-mapa { width: 100%; height: 360px; border: 0; border-radius: var(--raio); margin-top: clamp(48px, 7vw, 80px); filter: grayscale(0.4) contrast(1.05); }
+  @media (max-width: 900px) { .contato-grid { grid-template-columns: 1fr; } .form .botao { justify-self: stretch; } }
+</style>

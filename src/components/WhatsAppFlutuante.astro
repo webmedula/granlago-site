@@ -1,0 +1,14 @@
+---
+import { site } from '../data/site';
+import Icone from './Icone.astro';
+const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(site.contato.whatsappMensagem)}`;
+---
+<a class="wa" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp" data-evento="whatsapp_flutuante" data-wa>
+  <Icone nome="whatsapp" />
+</a>
+<style>
+  .wa { position: fixed; right: 18px; bottom: 18px; z-index: 40; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 12px 30px -8px rgba(0,0,0,0.35); transition: transform 0.4s var(--ease), opacity 0.4s; }
+  .wa :global(svg) { width: 30px; height: 30px; }
+  .wa:hover { transform: scale(1.08); }
+  .wa.escondido { opacity: 0; transform: scale(0.6); pointer-events: none; }
+</style>
