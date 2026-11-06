@@ -1,0 +1,45 @@
+---
+import { lazer } from '../data/site';
+import Foto from './Foto.astro';
+---
+<section class="lazer" id="lazer">
+  <div class="lazer-pin" data-lazer-pin>
+    <div class="container lazer-topo">
+      <h2 data-reveal>Mais de 40 itens de lazer para viver todos os dias</h2>
+      <p class="lead" data-reveal>Agrupados em seis ambientes, do lago às quadras.</p>
+    </div>
+    <div class="lazer-trilho" data-lazer-trilho tabindex="0" role="region" aria-label="Ambientes de lazer, role para o lado">
+      {lazer.map((g) => (
+        <article class="lazer-card">
+          <Foto src={g.imagem} alt={`${g.tema}: ${g.titulo}`} class="lazer-foto" />
+          <div class="lazer-info">
+            <h3>{g.tema}</h3>
+            <p>{g.titulo}</p>
+            <ul>{g.itens.map((it) => <li>{it}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .lazer { overflow: hidden; }
+  .lazer-pin { display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; gap: clamp(32px, 4vw, 48px); min-height: 100dvh; padding-block: 96px 48px; }
+  .lazer-topo { display: grid; gap: 14px; }
+  .lazer-topo h2 { max-width: 18ch; }
+  .lazer-trilho { display: flex; gap: 20px; padding-inline: var(--gutter); width: max-content; justify-self: start; }
+  .lazer-card { width: min(80vw, 400px); flex: none; border-radius: var(--raio); overflow: hidden; background: var(--surface); box-shadow: 0 1px 0 var(--line); display: grid; grid-template-rows: auto 1fr; }
+  .lazer-card :global(.lazer-foto) { aspect-ratio: 16 / 11; }
+  .lazer-info { padding: 22px 22px 26px; display: grid; gap: 6px; align-content: start; }
+  .lazer-info > p { color: var(--fg-soft); font-size: 0.95rem; }
+  .lazer-info ul { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .lazer-info li { font-size: 0.8rem; padding: 5px 11px; border-radius: 999px; background: var(--bg-2); }
+
+  @media (max-width: 900px) {
+    .lazer-pin { min-height: 0; padding-block: 88px 64px; }
+    .lazer-trilho { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding-bottom: 8px; scrollbar-width: none; }
+    .lazer-trilho::-webkit-scrollbar { display: none; }
+    .lazer-card { scroll-snap-align: start; }
+  }
+</style>

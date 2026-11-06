@@ -1,0 +1,23 @@
+---
+import { destaques } from '../data/site';
+---
+<section class="dest" aria-label="Números do Gran Lago">
+  <ul class="container dest-lista">
+    {destaques.map((d) => (
+      <li data-reveal>
+        <strong><span>{d.prefixo}</span><span data-contador={d.valor}>{d.valor}</span><span>{d.sufixo}</span></strong>
+        <span>{d.rotulo}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="container dest-nota">* Levantamento do setor sobre lotes em condomínios horizontais no eixo da GO-020.</p>
+</section>
+<style>
+  .dest { padding-block: clamp(56px, 7vw, 88px) 0; }
+  .dest-lista { list-style: none; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
+  .dest-lista li { display: grid; gap: 10px; align-content: start; padding-top: 22px; border-top: 1px solid var(--line); }
+  .dest-lista strong { font-variant-numeric: tabular-nums; font-family: var(--display); font-weight: 300; font-size: clamp(3rem, 6vw, 5.2rem); line-height: 0.95; letter-spacing: -0.05em; }
+  .dest-lista li > span { color: var(--fg-soft); max-width: 28ch; font-size: 0.98rem; }
+  .dest-nota { font-size: 0.78rem; color: var(--fg-soft); margin-top: 22px; }
+  @media (max-width: 767px) { .dest-lista { grid-template-columns: 1fr; gap: 28px; } }
+</style>

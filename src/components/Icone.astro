@@ -1,0 +1,25 @@
+---
+// Ícones Phosphor (peso regular), injetados inline.
+import whatsapp from '@phosphor-icons/core/assets/regular/whatsapp-logo.svg?raw';
+import seta from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
+import setaDiagonal from '@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw';
+import telefone from '@phosphor-icons/core/assets/regular/phone.svg?raw';
+import mapa from '@phosphor-icons/core/assets/regular/map-pin.svg?raw';
+import instagram from '@phosphor-icons/core/assets/regular/instagram-logo.svg?raw';
+import play from '@phosphor-icons/core/assets/fill/play-fill.svg?raw';
+import fechar from '@phosphor-icons/core/assets/regular/x.svg?raw';
+import calculadora from '@phosphor-icons/core/assets/regular/calculator.svg?raw';
+import menu from '@phosphor-icons/core/assets/regular/list.svg?raw';
+import escudo from '@phosphor-icons/core/assets/regular/shield-check.svg?raw';
+import raio from '@phosphor-icons/core/assets/regular/lightning.svg?raw';
+import arvore from '@phosphor-icons/core/assets/regular/tree.svg?raw';
+import anterior from '@phosphor-icons/core/assets/regular/caret-left.svg?raw';
+import proximo from '@phosphor-icons/core/assets/regular/caret-right.svg?raw';
+
+const icones = { whatsapp, seta, setaDiagonal, telefone, mapa, instagram, play, fechar, calculadora, menu, escudo, raio, arvore, anterior, proximo };
+export type NomeIcone = keyof typeof icones;
+interface Props { nome: NomeIcone; class?: string }
+const { nome, class: cls } = Astro.props;
+const svg = icones[nome].replace('<svg ', `<svg aria-hidden="true" focusable="false" fill="currentColor" ${cls ? `class="${cls}" ` : ''}`);
+---
+<Fragment set:html={svg} />

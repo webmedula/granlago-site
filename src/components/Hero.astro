@@ -1,0 +1,39 @@
+---
+import { site, CTA_CONTATO, CTA_SIMULADOR } from '../data/site';
+import Icone from './Icone.astro';
+const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(site.contato.whatsappMensagem)}`;
+---
+<section class="hero" data-hero>
+  <div class="hero-midia img-ph" data-hero-midia>
+    <!-- Para vídeo aéreo: <video autoplay muted loop playsinline poster="/img/hero.webp" src="/img/hero.mp4"></video> -->
+    <img src="/img/hero.webp" alt="Vista ilustrativa do lago do Gran Lago" width="2400" height="1350" fetchpriority="high" decoding="async" onerror="this.style.visibility='hidden'" />
+  </div>
+  <div class="hero-veu" aria-hidden="true"></div>
+
+  <div class="hero-conteudo container">
+    <p class="eyebrow hero-eyebrow" data-hero-item>Condomínio horizontal na GO-020</p>
+    <h1 class="hero-titulo" data-split>Viver à beira do lago, cercado pela natureza</h1>
+    <p class="hero-texto" data-hero-item>
+      Paisagismo biofílico, mais de 40 itens de lazer e lotes no eixo que mais valoriza em Goiânia.
+    </p>
+    <div class="hero-acoes" data-hero-item>
+      <a class="botao" href={wa} target="_blank" rel="noopener" data-evento="whatsapp_hero"><Icone nome="whatsapp" /> {CTA_CONTATO}</a>
+      <a class="botao vidro" href={site.links.simulador} target="_blank" rel="noopener" data-evento="simulador_hero"><Icone nome="calculadora" /> {CTA_SIMULADOR}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100dvh; display: grid; align-items: end; color: #fff; overflow: hidden; background: var(--ph-a); }
+  .hero-midia { position: absolute; inset: 0; will-change: transform; }
+  .hero-midia img, .hero-midia video { width: 100%; height: 100%; object-fit: cover; }
+  .hero-veu { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,22,16,0.45) 0%, rgba(8,22,16,0) 30%, rgba(8,22,16,0.25) 55%, rgba(8,22,16,0.82) 100%); }
+  .hero-conteudo { position: relative; padding-top: 96px; padding-bottom: clamp(48px, 8vh, 96px); }
+  .hero-eyebrow { color: #f1d7a2; }
+  .hero-titulo { font-size: clamp(2.7rem, 6.4vw, 6rem); font-weight: 350; max-width: 15ch; margin: 18px 0 22px; line-height: 1; letter-spacing: -0.045em; }
+  .hero-texto { max-width: 44ch; font-size: clamp(1.02rem, 1.4vw, 1.18rem); color: rgba(255,255,255,0.86); }
+  .hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  @media (max-width: 640px) {
+    .hero-acoes .botao { flex: 1 1 100%; }
+  }
+</style>

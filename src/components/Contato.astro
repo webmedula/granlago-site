@@ -1,0 +1,90 @@
+---
+import { site } from '../data/site';
+import Icone from './Icone.astro';
+const c = site.contato;
+const wa = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(c.whatsappMensagem)}`;
+const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(c.enderecoVendas)}&output=embed`;
+---
+<section class="contato secao" id="contato">
+  <div class="container contato-grid">
+    <div class="contato-texto">
+            <h2 data-reveal>Venha conhecer o Gran Lago</h2>
+      <p class="lead" data-reveal>Deixe seus dados e um consultor fala com você, ou chame direto no WhatsApp.</p>
+
+      <ul class="contato-canais" data-reveal>
+        <li>
+          <a href={wa} target="_blank" rel="noopener" data-evento="whatsapp_contato"><Icone nome="whatsapp" /><span><strong>WhatsApp de vendas</strong>{c.telefoneVendas}</span></a>
+        </li>
+        <li>
+          <a href={`tel:${c.telefoneRelacionamentoLink}`} data-evento="telefone_relacionamento"><Icone nome="telefone" /><span><strong>Relacionamento com o cliente</strong>{c.telefoneRelacionamento} · {c.horarioRelacionamento}</span></a>
+        </li>
+        <li>
+          <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.enderecoVendas)}`} target="_blank" rel="noopener"><Icone nome="mapa" /><span><strong>Central de vendas</strong>{c.enderecoVendas}</span></a>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" name="contato" method="POST" action="/obrigado/" data-netlify="true" netlify-honeypot="empresa" novalidate data-reveal data-form>
+      <input type="hidden" name="form-name" value="contato" />
+      <p class="sr-only"><label>Não preencha: <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+      <h3>Quero receber informações</h3>
+      <div class="campo">
+        <label for="f-nome">Nome</label>
+        <input id="f-nome" name="nome" required autocomplete="name" placeholder="Ex.: Ana Ribeiro…" aria-describedby="e-nome" />
+        <p class="erro" id="e-nome" aria-live="polite" data-erro="Informe seu nome para o consultor saber com quem falar."></p>
+      </div>
+      <div class="campo">
+        <label for="f-email">E-mail</label>
+        <input id="f-email" name="email" type="email" required autocomplete="email" spellcheck="false" autocapitalize="off" placeholder="Ex.: ana@email.com…" aria-describedby="e-email" />
+        <p class="erro" id="e-email" aria-live="polite" data-erro="Confira o e-mail. Ele precisa ter o formato nome@dominio.com."></p>
+      </div>
+      <div class="campo">
+        <label for="f-tel">Telefone ou WhatsApp</label>
+        <input id="f-tel" name="telefone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="Ex.: (62) 99999-9999…" pattern="\(\d{2}\) \d{4,5}-\d{4}" aria-describedby="e-tel" data-mascara-telefone />
+        <p class="erro" id="e-tel" aria-live="polite" data-erro="Informe o telefone com DDD, por exemplo (62) 99999-9999."></p>
+      </div>
+      <div>
+        <label class="aceite">
+          <input type="checkbox" name="aceite" required aria-describedby="e-aceite" />
+          <span>Concordo com a <a href="/politica-de-privacidade/" target="_blank">política de privacidade</a> e aceito ser contatado.</span>
+        </label>
+        <p class="erro" id="e-aceite" aria-live="polite" data-erro="Marque o aceite para podermos entrar em contato."></p>
+      </div>
+      <button class="botao forte" type="submit" data-enviar><span data-enviar-texto>Enviar</span> <Icone nome="seta" /></button>
+    </form>
+  </div>
+
+  <div class="container">
+    <iframe class="contato-mapa" title="Mapa da central de vendas Gran Lago" src={mapaEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-reveal="fade"></iframe>
+  </div>
+</section>
+
+<style>
+  .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .contato-texto { display: grid; gap: 22px; }
+  .contato-canais { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+  .contato-canais a { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; text-decoration: none; border-top: 1px solid var(--line); }
+  .contato-canais :global(svg) { width: 24px; height: 24px; flex: none; color: var(--acento-texto); margin-top: 2px; }
+  .contato-canais span { display: grid; font-size: 0.95rem; color: var(--fg-soft); }
+  .contato-canais strong { color: var(--fg); font-weight: 700; }
+  .contato-canais a:hover strong { color: var(--acento-texto); }
+
+  .form { background: var(--surface); border-radius: var(--raio); padding: clamp(24px, 4vw, 44px); display: grid; gap: 18px; box-shadow: var(--sombra), 0 0 0 1px var(--line); }
+  .form h3 { margin-bottom: 6px; }
+  .campo { display: grid; gap: 6px; }
+  .campo label { font-size: 0.85rem; font-weight: 600; }
+  .campo input::placeholder { color: color-mix(in srgb, var(--fg-soft) 80%, transparent); }
+  .campo input[aria-invalid='true'] { border-color: #c2412d; }
+  .erro { font-size: 0.82rem; color: #b3361f; min-height: 0; }
+  .erro:empty { display: none; }
+  @media (prefers-color-scheme: dark) { .erro { color: #f08a72; } .campo input[aria-invalid='true'] { border-color: #f08a72; } }
+  .botao[disabled] { opacity: 0.7; cursor: progress; }
+  .campo input { font: inherit; font-weight: 400; font-size: 1rem; min-height: 52px; padding: 0 16px; border-radius: var(--raio-campo); border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); transition: border-color 0.3s, background 0.3s; }
+  .campo input:focus-visible { outline: none; border-color: var(--acento); background: var(--surface); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 35%, transparent); }
+  .aceite { cursor: pointer; display: flex; gap: 12px; align-items: flex-start; font-size: 0.85rem; color: var(--fg-soft); }
+  .aceite input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--acento); flex: none; }
+  .form .botao { justify-self: start; margin-top: 4px; }
+  .contato-mapa { width: 100%; height: 360px; border: 0; border-radius: var(--raio); margin-top: clamp(48px, 7vw, 80px); filter: grayscale(0.35); }
+  @media (prefers-color-scheme: dark) { .contato-mapa { filter: invert(0.9) hue-rotate(180deg) grayscale(0.3); } }
+  @media (max-width: 900px) { .contato-grid { grid-template-columns: 1fr; } .form .botao { justify-self: stretch; } }
+</style>

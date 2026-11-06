@@ -1,0 +1,29 @@
+---
+import Foto from './Foto.astro';
+import Icone from './Icone.astro';
+---
+<section class="local secao" id="localizacao">
+  <div class="container local-grid">
+    <div class="local-texto">
+      <p class="eyebrow" data-reveal>Localização</p>
+      <h2 data-reveal>A região que dita um novo nível no jeito de viver</h2>
+      <p class="lead" data-reveal>
+        A GO-020 é hoje um dos eixos mais consolidados de alto padrão em Goiânia, com infraestrutura, mobilidade e valorização contínua.
+      </p>
+      <a class="link-seta" href="https://www.google.com/maps/search/?api=1&query=Gran+Lago+Condom%C3%ADnio+Horizontal+GO-020" target="_blank" rel="noopener" data-reveal>
+        Ver no Google Maps <Icone nome="setaDiagonal" />
+      </a>
+    </div>
+    <div class="local-mapa" data-reveal="fade">
+      <Foto src="/img/mapa.webp" alt="Mapa com a localização do Gran Lago na GO-020" class="local-foto" data-parallax="-6" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .local { background: var(--bg-2); }
+  .local-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .local-texto { display: grid; gap: 22px; justify-items: start; }
+  .local-mapa :global(.local-foto) { border-radius: var(--raio); aspect-ratio: 4 / 3; }
+  @media (max-width: 900px) { .local-grid { grid-template-columns: 1fr; } }
+</style>

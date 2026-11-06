@@ -1,0 +1,74 @@
+---
+import { menu, site, CTA_CONTATO } from '../data/site';
+import Logo from './Logo.astro';
+import Icone from './Icone.astro';
+interface Props { sobreImagem?: boolean }
+const { sobreImagem = true } = Astro.props;
+const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(site.contato.whatsappMensagem)}`;
+---
+<header class:list={['cab', { 'sobre-imagem': sobreImagem }]} data-cabecalho>
+  <div class="cab-in">
+    <a href="/" class="cab-logo" aria-label="Gran Lago, página inicial"><Logo /></a>
+    <nav class="cab-nav" aria-label="Principal">
+      <ul>
+        {menu.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="botao cab-cta" href={wa} target="_blank" rel="noopener" data-evento="whatsapp_cabecalho">
+      <Icone nome="whatsapp" /> {CTA_CONTATO}
+    </a>
+    <button class="cab-menu" aria-expanded="false" aria-controls="menu-movel" data-menu-botao>
+      <Icone nome="menu" /><span class="sr-only">Abrir menu</span>
+    </button>
+  </div>
+</header>
+
+<div class="movel" id="menu-movel" data-menu hidden>
+  <nav aria-label="Menu">
+    <ul>
+      {menu.map((m, i) => <li style={`--i:${i}`}><a href={m.href}>{m.label}</a></li>)}
+      <li style={`--i:${menu.length}`}><a href="/#contato">Contato</a></li>
+    </ul>
+  </nav>
+  <a class="botao" href={wa} target="_blank" rel="noopener"><Icone nome="whatsapp" /> {CTA_CONTATO}</a>
+</div>
+
+<style>
+  .cab {
+    position: fixed; inset: 0 0 auto; z-index: var(--z-cabecalho); color: var(--fg);
+    transition: background 0.5s var(--ease), color 0.5s, transform 0.6s var(--ease), box-shadow 0.5s;
+  }
+  .cab.sobre-imagem:not(.solido) { color: #fff; }
+  .cab.solido {
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .cab.oculto { transform: translateY(-100%); }
+  .cab-in { display: flex; align-items: center; gap: 28px; max-width: 1440px; height: 72px; margin: 0 auto; padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left)); }
+  .cab-logo { text-decoration: none; }
+  .cab-nav { margin-left: auto; }
+  .cab-nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .cab-nav a { text-decoration: none; font-size: 0.92rem; font-weight: 500; position: relative; padding-block: 6px; white-space: nowrap; }
+  .cab-nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
+  .cab-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .cab-cta { min-height: 44px; padding: 0 20px; }
+  .cab-menu { display: none; margin-left: auto; background: none; border: 0; color: inherit; width: 48px; height: 48px; padding: 10px; cursor: pointer; }
+  .cab-menu :global(svg) { width: 28px; height: 28px; }
+
+  .movel {
+    position: fixed; inset: 0; z-index: var(--z-menu); background: var(--bg); color: var(--fg);
+    display: flex; flex-direction: column; justify-content: center; gap: 40px; padding: 100px max(var(--gutter), env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); overscroll-behavior: contain; overflow-y: auto;
+  }
+  .movel[hidden] { display: none; }
+  .movel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .movel a:not(.botao) { font-family: var(--display); font-size: 2.3rem; letter-spacing: -0.03em; text-decoration: none; display: block; padding: 4px 0; }
+  .movel li { animation: entra 0.7s var(--ease) both; animation-delay: calc(var(--i) * 45ms); }
+  @keyframes entra { from { opacity: 0; transform: translateY(18px); } }
+  :global(body.menu-aberto) .cab { color: var(--fg) !important; }
+
+  @media (max-width: 1120px) {
+    .cab-nav, .cab-cta { display: none; }
+    .cab-menu { display: block; }
+  }
+</style>
