@@ -1,6 +1,9 @@
 // Conteúdo central do site. Edite aqui textos, contatos e links.
 // Itens marcados com "CONFIRMAR" precisam ser validados com a Urbanizamos.
 
+export const CTA_CONTATO = 'Falar no WhatsApp';
+export const CTA_SIMULADOR = 'Simular parcelas';
+
 export const site = {
   nome: 'Gran Lago',
   nomeCompleto: 'Gran Lago Condomínio Horizontal',
@@ -32,7 +35,7 @@ export const site = {
   },
 
   legal:
-    'Loteamento do tipo fechado denominado Gran Lago Condomínio Horizontal, de responsabilidade da Vale do Jordão Empreendimentos LTDA, inscrita no CNPJ 50.215.980/0001-18. Empreendimento registrado sob a matrícula nº 27.286 no Cartório de Registro de Imóveis de Bela Vista de Goiás – GO. Todas as imagens constantes deste material são ilustrativas. Perspectivas artísticas preliminares, sujeitas a alteração.',
+    'Loteamento do tipo fechado denominado Gran Lago Condomínio Horizontal, de responsabilidade da Vale do Jordão Empreendimentos LTDA, inscrita no CNPJ 50.215.980/0001-18. Empreendimento registrado sob a matrícula nº 27.286 no Cartório de Registro de Imóveis de Bela Vista de Goiás - GO. Todas as imagens constantes deste material são ilustrativas. Perspectivas artísticas preliminares, sujeitas a alteração.',
 };
 
 export const menu = [
@@ -42,13 +45,12 @@ export const menu = [
   { label: 'Tour 360', href: '/#tour' },
   { label: 'Galeria', href: '/#galeria' },
   { label: 'Obras', href: '/#obras' },
-  { label: 'Contato', href: '/#contato' },
 ];
 
 export const destaques = [
-  { valor: 40, prefixo: '+', sufixo: '', rotulo: 'itens de lazer' },
-  { valor: 15, prefixo: '', sufixo: ' min', rotulo: 'do centro de Goiânia' }, // CONFIRMAR referência dos 15 min
-  { valor: 93, prefixo: '', sufixo: '%', rotulo: 'de valorização na GO-020*' },
+  { valor: 40, prefixo: '+', sufixo: '', rotulo: 'itens de lazer distribuídos ao redor do lago' },
+  { valor: 93, prefixo: '', sufixo: '%', rotulo: 'de valorização média dos lotes na GO-020 entre 2019 e 2024*' },
+  { valor: 39, prefixo: '', sufixo: ' anos', rotulo: 'de experiência da Takeda Design no paisagismo biofílico' },
 ];
 
 // Lazer agrupado por tema (a lista original tinha 42 itens com repetições).

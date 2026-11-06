@@ -17,17 +17,19 @@ if (movimento) {
   gsap.ticker.lagSmoothing(0);
 }
 
-/* ---------- Cabeçalho ---------- */
+/* ---------- Cabeçalho: sólido após o topo, some ao descer e volta ao subir ---------- */
 const cab = $('[data-cabecalho]');
-let ultimoY = 0;
-const aoRolar = () => {
-  const y = window.scrollY;
-  cab?.classList.toggle('solido', y > 40);
-  cab?.classList.toggle('oculto', y > 600 && y > ultimoY && !document.body.classList.contains('menu-aberto'));
-  ultimoY = y;
-};
-window.addEventListener('scroll', aoRolar, { passive: true });
-aoRolar();
+if (cab) {
+  ScrollTrigger.create({
+    start: 40,
+    end: 'max',
+    onToggle: (st) => cab.classList.toggle('solido', st.isActive),
+    onUpdate: (st) => {
+      const descendo = st.direction === 1 && st.scroll() > 600;
+      cab.classList.toggle('oculto', descendo && !document.body.classList.contains('menu-aberto'));
+    },
+  });
+}
 
 /* ---------- Menu móvel ---------- */
 const menuBotao = $<HTMLButtonElement>('[data-menu-botao]');
@@ -37,7 +39,7 @@ function fecharMenu() {
   menu.hidden = true;
   menuBotao?.setAttribute('aria-expanded', 'false');
   document.body.classList.remove('menu-aberto');
-  cab?.classList.toggle('solido', window.scrollY > 40);
+  ScrollTrigger.refresh();
   lenis?.start();
 }
 menuBotao?.addEventListener('click', () => {
@@ -104,19 +106,25 @@ $$('[data-evento]').forEach((el) =>
 );
 $('[data-form]')?.addEventListener('submit', () => dataLayer().push({ event: 'lead_formulario' }));
 
-/* ---------- WhatsApp flutuante: some no hero e no contato ---------- */
+/* ---------- WhatsApp flutuante: escondido no hero e no contato ---------- */
 const wa = $('[data-wa]');
 if (wa) {
-  const hero = $('[data-hero]');
-  const contato = $('#contato');
-  const atualizarWa = () => {
-    const noHero = hero ? window.scrollY < hero.offsetHeight * 0.6 : false;
-    const r = contato?.getBoundingClientRect();
-    const noContato = r ? r.top < window.innerHeight * 0.6 && r.bottom > 0 : false;
-    wa.classList.toggle('escondido', noHero || noContato);
-  };
-  window.addEventListener('scroll', atualizarWa, { passive: true });
-  atualizarWa();
+  const zonas = [$('[data-hero]'), $('#contato')].filter(Boolean) as HTMLElement[];
+  const ativas = new Set<HTMLElement>();
+  const atualizar = () => wa.classList.toggle('escondido', ativas.size > 0);
+  zonas.forEach((z) =>
+    ScrollTrigger.create({
+      trigger: z,
+      start: z.id === 'contato' ? 'top 70%' : 'top bottom',
+      end: z.id === 'contato' ? 'bottom top' : 'bottom 40%',
+      onToggle: (st) => {
+        if (st.isActive) ativas.add(z);
+        else ativas.delete(z);
+        atualizar();
+      },
+    }),
+  );
+  atualizar();
 }
 
 /* ---------- Galeria com lightbox ---------- */
@@ -228,17 +236,12 @@ if (movimento) {
       ease: 'none',
       scrollTrigger: {
         trigger: pin,
-        start: 'top top+=40',
+        start: 'top top',
         end: () => '+=' + distancia(),
         pin: true,
         scrub: 0.8,
         invalidateOnRefresh: true,
       },
-    });
-    gsap.to('[data-lazer-progresso]', {
-      scaleX: 1,
-      ease: 'none',
-      scrollTrigger: { trigger: pin, start: 'top top+=40', end: () => '+=' + distancia(), scrub: true },
     });
   });
 

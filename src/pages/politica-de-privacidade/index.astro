@@ -5,7 +5,7 @@ import Rodape from '../../components/Rodape.astro';
 import { site } from '../../data/site';
 ---
 <Base titulo="Política de privacidade | Gran Lago" descricao="Como o Gran Lago Condomínio Horizontal trata os dados pessoais enviados pelo site.">
-  <Cabecalho />
+  <Cabecalho sobreImagem={false} />
   <main class="pagina">
     <article class="container texto-legal">
       <p class="eyebrow">Política de privacidade</p>
@@ -27,9 +27,8 @@ import { site } from '../../data/site';
 </Base>
 <style is:global>
   .pagina { padding-top: 120px; }
-  body:has(.pagina) .cab:not(.solido) { color: var(--verde-900); }
   .texto-legal { max-width: 760px; display: grid; gap: 16px; padding-block: 40px 100px; }
   .texto-legal h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin-bottom: 12px; }
   .texto-legal h2 { font-size: 1.6rem; margin-top: 24px; }
-  .texto-legal p { color: var(--tinta-suave); }
+  .texto-legal p { color: var(--fg-soft); }
 </style>

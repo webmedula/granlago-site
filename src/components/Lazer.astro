@@ -2,48 +2,44 @@
 import { lazer } from '../data/site';
 import Foto from './Foto.astro';
 ---
-<section class="lazer" id="lazer" data-lazer>
+<section class="lazer" id="lazer">
   <div class="lazer-pin" data-lazer-pin>
     <div class="container lazer-topo">
-      <p class="eyebrow" data-reveal>Áreas de lazer</p>
       <h2 data-reveal>Mais de 40 itens de lazer para viver todos os dias</h2>
+      <p class="lead" data-reveal>Agrupados em seis ambientes, do lago às quadras.</p>
     </div>
     <div class="lazer-trilho" data-lazer-trilho>
-      {lazer.map((g, i) => (
+      {lazer.map((g) => (
         <article class="lazer-card">
           <Foto src={g.imagem} alt={`${g.tema}: ${g.titulo}`} class="lazer-foto" />
           <div class="lazer-info">
-            <span class="lazer-num">{String(i + 1).padStart(2, '0')} · {g.tema}</span>
-            <h3>{g.titulo}</h3>
+            <h3>{g.tema}</h3>
+            <p>{g.titulo}</p>
             <ul>{g.itens.map((it) => <li>{it}</li>)}</ul>
           </div>
         </article>
       ))}
     </div>
-    <div class="container lazer-barra" aria-hidden="true"><span data-lazer-progresso></span></div>
   </div>
 </section>
 
 <style>
-  .lazer { background: var(--areia); padding-block: clamp(80px, 10vw, 120px) 40px; overflow: hidden; }
-  .lazer-pin { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; overflow: hidden; }
-  .lazer-topo { display: grid; gap: 18px; }
-  .lazer-topo h2 { max-width: 16ch; }
-  .lazer-trilho { display: flex; gap: 24px; padding-inline: var(--gutter); width: max-content; justify-self: start; }
-  .lazer-card { position: relative; width: min(78vw, 440px); flex: none; border-radius: var(--raio); overflow: hidden; background: var(--verde-800); color: var(--areia); display: grid; }
-  .lazer-card :global(.lazer-foto) { aspect-ratio: 4 / 3; }
-  .lazer-info { padding: 26px 26px 30px; display: grid; gap: 12px; }
-  .lazer-num { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ouro-claro); font-weight: 700; }
-  .lazer-info ul { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .lazer-info li { font-size: 0.82rem; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(243,238,228,0.22); }
-  .lazer-barra { height: 2px; }
-  .lazer-barra span { display: block; height: 100%; background: var(--verde-700); transform-origin: left; transform: scaleX(0); }
+  .lazer { overflow: hidden; }
+  .lazer-pin { display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; gap: clamp(32px, 4vw, 48px); min-height: 100dvh; padding-block: 96px 48px; }
+  .lazer-topo { display: grid; gap: 14px; }
+  .lazer-topo h2 { max-width: 18ch; }
+  .lazer-trilho { display: flex; gap: 20px; padding-inline: var(--gutter); width: max-content; justify-self: start; }
+  .lazer-card { width: min(80vw, 400px); flex: none; border-radius: var(--raio); overflow: hidden; background: var(--surface); box-shadow: 0 1px 0 var(--line); display: grid; grid-template-rows: auto 1fr; }
+  .lazer-card :global(.lazer-foto) { aspect-ratio: 16 / 11; }
+  .lazer-info { padding: 22px 22px 26px; display: grid; gap: 6px; align-content: start; }
+  .lazer-info > p { color: var(--fg-soft); font-size: 0.95rem; }
+  .lazer-info ul { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .lazer-info li { font-size: 0.8rem; padding: 5px 11px; border-radius: 999px; background: var(--bg-2); }
 
-  /* No celular o trilho rola com o dedo */
   @media (max-width: 900px) {
-    .lazer-trilho { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: none; }
+    .lazer-pin { min-height: 0; padding-block: 88px 64px; }
+    .lazer-trilho { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding-bottom: 8px; scrollbar-width: none; }
     .lazer-trilho::-webkit-scrollbar { display: none; }
-    .lazer-card { scroll-snap-align: center; }
-    .lazer-barra { display: none; }
+    .lazer-card { scroll-snap-align: start; }
   }
 </style>

@@ -7,15 +7,15 @@ const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(sit
 ---
 <Base titulo="Obrigado | Gran Lago" descricao="Recebemos seu contato.">
   <meta name="robots" content="noindex" slot="head" />
-  <Cabecalho />
+  <Cabecalho sobreImagem={false} />
   <main class="pagina">
     <section class="container obrigado">
       <p class="eyebrow">Recebemos seus dados</p>
       <h1>Obrigado! Em breve um consultor fala com você.</h1>
       <p class="lead">Se preferir, adiante a conversa pelo WhatsApp.</p>
       <div class="obrigado-acoes">
-        <a class="botao verde" href={wa} target="_blank" rel="noopener">Falar no WhatsApp</a>
-        <a class="botao contorno" href="/">Voltar ao site</a>
+        <a class="botao forte" href={wa} target="_blank" rel="noopener">Falar no WhatsApp</a>
+        <a class="botao linha" href="/">Voltar ao site</a>
       </div>
     </section>
   </main>
@@ -24,7 +24,6 @@ const wa = `https://wa.me/${site.contato.whatsapp}?text=${encodeURIComponent(sit
 <script is:inline>window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'lead_confirmado' });</script>
 <style is:global>
   .pagina { padding-top: 120px; }
-  body:has(.pagina) .cab:not(.solido) { color: var(--verde-900); }
   .obrigado { display: grid; gap: 22px; justify-items: start; min-height: 60vh; align-content: center; padding-block: 60px; }
   .obrigado h1 { font-size: clamp(2.2rem, 5vw, 4rem); max-width: 18ch; }
   .obrigado-acoes { display: flex; gap: 12px; flex-wrap: wrap; }

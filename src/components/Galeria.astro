@@ -1,23 +1,21 @@
 ---
 import { galeria } from '../data/site';
+import Icone from './Icone.astro';
 interface Props { limite?: number; titulo?: boolean }
-const { limite = 9, titulo = true } = Astro.props;
+const { limite = 8, titulo = true } = Astro.props;
 const itens = galeria.slice(0, limite);
 ---
 <section class="gal secao" id="galeria">
   <div class="container">
     {titulo && (
       <div class="gal-topo">
-        <div>
-          <p class="eyebrow" data-reveal>Galeria</p>
-          <h2 data-reveal>Cada detalhe, desenhado com cuidado</h2>
-        </div>
-        {limite < galeria.length && <a class="botao contorno" href="/galeria/" data-reveal>Ver as {galeria.length} imagens</a>}
+        <h2 data-reveal>Cada detalhe, desenhado com cuidado</h2>
+        {limite < galeria.length && <a class="link-seta" href="/galeria/" data-reveal>Ver as {galeria.length} imagens <Icone nome="seta" /></a>}
       </div>
     )}
-    <div class="gal-grid" data-galeria>
-      {itens.map((g, i) => (
-        <button class="gal-item img-ph" data-reveal style={`--d:${i % 3}`} data-lightbox={g.src} aria-label={`Ampliar: ${g.alt}`}>
+    <div class:list={['gal-grid', { completa: !titulo }]}>
+      {itens.map((g) => (
+        <button class="gal-item img-ph" data-reveal data-lightbox={g.src} aria-label={`Ampliar: ${g.alt}`}>
           <img src={g.src} alt={g.alt} loading="lazy" decoding="async" onerror="this.style.visibility='hidden'" />
         </button>
       ))}
@@ -27,28 +25,35 @@ const itens = galeria.slice(0, limite);
 
 <dialog class="lb" data-lightbox-dialog aria-label="Imagem ampliada">
   <img alt="" data-lightbox-img />
-  <button class="lb-fechar" data-lightbox-fechar aria-label="Fechar">×</button>
-  <button class="lb-nav lb-ant" data-lightbox-ant aria-label="Imagem anterior">‹</button>
-  <button class="lb-nav lb-prox" data-lightbox-prox aria-label="Próxima imagem">›</button>
+  <button class="lb-fechar" data-lightbox-fechar aria-label="Fechar"><Icone nome="fechar" /></button>
+  <button class="lb-nav lb-ant" data-lightbox-ant aria-label="Imagem anterior"><Icone nome="anterior" /></button>
+  <button class="lb-nav lb-prox" data-lightbox-prox aria-label="Próxima imagem"><Icone nome="proximo" /></button>
 </dialog>
 
 <style>
-  .gal-topo { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(40px, 6vw, 64px); flex-wrap: wrap; }
-  .gal-topo > div { display: grid; gap: 18px; }
-  .gal-grid { columns: 3 280px; column-gap: 16px; }
-  .gal-item { display: block; width: 100%; margin: 0 0 16px; padding: 0; border: 0; border-radius: 14px; overflow: hidden; cursor: zoom-in; break-inside: avoid; min-height: 200px; }
-  .gal-item:nth-child(3n + 1) { aspect-ratio: 4 / 5; }
-  .gal-item:nth-child(3n + 2) { aspect-ratio: 1; }
-  .gal-item:nth-child(3n) { aspect-ratio: 4 / 3; }
-  .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+  .gal-topo { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; margin-bottom: clamp(40px, 5vw, 64px); }
+  .gal-topo h2 { max-width: 16ch; }
+  /* Mosaico assimétrico: 8 imagens em ritmo 2 grandes + 6 menores */
+  .gal-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(140px, 16vw, 230px); gap: 14px; }
+  .gal-item { display: block; padding: 0; border: 0; border-radius: var(--raio); overflow: hidden; cursor: zoom-in; }
+  .gal-grid:not(.completa) .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gal-grid:not(.completa) .gal-item:nth-child(6) { grid-column: span 2; grid-row: span 2; }
+  .gal-grid.completa .gal-item:nth-child(5n + 1) { grid-column: span 2; grid-row: span 2; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
   .gal-item:hover img { transform: scale(1.05); }
 
-  .lb { border: 0; padding: 0; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; background: rgba(12,35,28,0.96); }
+  .lb { border: 0; padding: 0; max-width: 100vw; max-height: 100dvh; width: 100vw; height: 100dvh; background: rgba(8,18,13,0.96); color: #fff; }
   .lb[open] { display: grid; place-items: center; }
-  .lb::backdrop { background: rgba(12,35,28,0.9); }
-  .lb img { max-width: 92vw; max-height: 86vh; object-fit: contain; border-radius: 8px; }
-  .lb button { position: absolute; background: none; border: 0; color: var(--areia); font-size: 2.6rem; width: 56px; height: 56px; cursor: pointer; line-height: 1; }
+  .lb::backdrop { background: rgba(8,18,13,0.9); }
+  .lb img { max-width: 92vw; max-height: 86dvh; object-fit: contain; border-radius: 8px; }
+  .lb button { position: absolute; background: rgba(255,255,255,0.08); border: 0; border-radius: 50%; color: #fff; width: 52px; height: 52px; cursor: pointer; display: grid; place-items: center; }
+  .lb button :global(svg) { width: 24px; height: 24px; }
   .lb-fechar { top: 16px; right: 16px; }
-  .lb-ant { left: 8px; top: 50%; translate: 0 -50%; }
-  .lb-prox { right: 8px; top: 50%; translate: 0 -50%; }
+  .lb-ant { left: 12px; top: 50%; translate: 0 -50%; }
+  .lb-prox { right: 12px; top: 50%; translate: 0 -50%; }
+  @media (max-width: 767px) {
+    .gal-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 42vw; gap: 10px; }
+    .gal-grid .gal-item:nth-child(n) { grid-column: auto; grid-row: auto; }
+    .gal-grid .gal-item:nth-child(3n + 1) { grid-column: span 2; }
+  }
 </style>

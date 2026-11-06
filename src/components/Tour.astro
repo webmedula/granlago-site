@@ -1,51 +1,50 @@
 ---
-import { site } from '../data/site';
+import { site, CTA_SIMULADOR } from '../data/site';
 import Icone from './Icone.astro';
 ---
 <section class="tour" id="tour">
   <div class="tour-midia img-ph" data-tour-midia>
     <img src="/img/tour.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'" />
   </div>
-  <div class="tour-veu"></div>
+  <div class="tour-veu" aria-hidden="true"></div>
   <div class="container tour-conteudo">
-    <p class="eyebrow" data-reveal>Tour virtual 360°</p>
+    <p class="eyebrow tour-eyebrow" data-reveal>Tour virtual 360°</p>
     <h2 data-reveal>Caminhe pelo Gran Lago antes de visitar</h2>
     <a class="tour-play" href={site.links.tour360} target="_blank" rel="noopener" data-reveal data-evento="tour360">
       <span class="tour-play-icone"><Icone nome="play" /></span>
-      <span>Explorar o tour 360</span>
+      <span>Abrir o tour</span>
     </a>
   </div>
 </section>
 
 <section class="sim">
   <div class="container sim-in" data-reveal>
-    <div>
-      <p class="eyebrow">Simulador</p>
-      <h2>Descubra como o seu lote cabe no seu bolso</h2>
-    </div>
-    <a class="botao verde" href={site.links.simulador} target="_blank" rel="noopener" data-evento="simulador_secao">
-      <Icone nome="calculadora" /> Simular agora
+    <h2>Descubra como o seu lote cabe no seu bolso</h2>
+    <a class="botao forte" href={site.links.simulador} target="_blank" rel="noopener" data-evento="simulador_secao">
+      <Icone nome="calculadora" /> {CTA_SIMULADOR}
     </a>
   </div>
 </section>
 
 <style>
-  .tour { position: relative; min-height: 92svh; display: grid; align-items: center; color: var(--areia); overflow: hidden; background: var(--verde-900); }
+  .tour { position: relative; min-height: 90dvh; display: grid; align-items: center; color: #fff; overflow: hidden; background: var(--ph-a); }
   .tour-midia { position: absolute; inset: -10% 0; will-change: transform; }
   .tour-midia img { width: 100%; height: 100%; object-fit: cover; }
-  .tour-veu { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(12,35,28,0.35), rgba(12,35,28,0.8)); }
-  .tour-conteudo { position: relative; display: grid; justify-items: center; text-align: center; gap: 22px; }
+  .tour-veu { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(8,22,16,0.3), rgba(8,22,16,0.78)); }
+  .tour-conteudo { position: relative; display: grid; justify-items: center; text-align: center; gap: 20px; }
+  .tour-eyebrow { color: #f1d7a2; }
   .tour-conteudo h2 { max-width: 15ch; }
-  .tour-play { display: inline-flex; flex-direction: column; align-items: center; gap: 16px; text-decoration: none; margin-top: 20px; font-weight: 700; }
-  .tour-play-icone { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: var(--areia); color: var(--verde-900); position: relative; transition: transform 0.5s var(--ease); }
-  .tour-play-icone::before { content: ''; position: absolute; inset: -10px; border-radius: 50%; border: 1px solid rgba(243,238,228,0.5); animation: pulso 2.4s var(--ease) infinite; }
+  .tour-play { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; text-decoration: none; margin-top: 18px; font-weight: 600; }
+  .tour-play-icone { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #142019; position: relative; transition: transform 0.6s var(--ease); }
+  .tour-play-icone::before { content: ''; position: absolute; inset: -10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.5); animation: pulso 2.6s var(--ease) infinite; }
   .tour-play:hover .tour-play-icone { transform: scale(1.08); }
+  .tour-play:active .tour-play-icone { transform: scale(0.97); }
   .tour-play-icone :global(svg) { width: 30px; height: 30px; margin-left: 4px; }
   @keyframes pulso { from { transform: scale(0.9); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
 
-  .sim { background: var(--ouro-claro); }
-  .sim-in { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-block: clamp(48px, 7vw, 80px); }
-  .sim-in h2 { font-size: clamp(1.8rem, 3.6vw, 3rem); max-width: 18ch; margin-top: 12px; }
-  .sim .eyebrow { color: var(--verde-800); }
+  .sim { background: var(--acento); color: #142019; }
+  .sim-in { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-block: clamp(48px, 7vw, 84px); }
+  .sim-in h2 { font-size: clamp(1.8rem, 3.4vw, 2.9rem); max-width: 18ch; }
+  .sim .botao.forte { --b-bg: #142019; --b-fg: #eef0ea; }
   @media (max-width: 720px) { .sim-in { flex-direction: column; align-items: flex-start; } }
 </style>

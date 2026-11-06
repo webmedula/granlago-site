@@ -1,15 +1,15 @@
 ---
-// Logo em texto até o arquivo oficial (logo.webp) ser adicionado em public/img.
+// Logo provisória em texto. Quando o arquivo oficial chegar (public/img/logo.svg), troque aqui.
 interface Props { class?: string }
 const { class: cls } = Astro.props;
 ---
 <span class:list={['logo', cls]}>
-  <span class="logo-gran">Gran</span><span class="logo-lago">Lago</span>
+  <span class="logo-nome">Gran<em>Lago</em></span>
   <span class="logo-sub">Condomínio Horizontal</span>
 </span>
 <style>
-  .logo { display: inline-grid; grid-template-columns: auto auto; column-gap: 0.28em; line-height: 0.9; font-family: var(--serif); }
-  .logo-gran { font-size: 1.6rem; font-weight: 300; }
-  .logo-lago { font-size: 1.6rem; font-weight: 600; font-style: italic; }
-  .logo-sub { grid-column: 1 / -1; font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 6px; opacity: 0.8; }
+  .logo { display: inline-grid; line-height: 1; font-family: var(--display); }
+  .logo-nome { font-size: 1.5rem; font-weight: 300; letter-spacing: -0.04em; }
+  .logo-nome em { font-style: normal; font-weight: 700; margin-left: 0.12em; }
+  .logo-sub { font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; margin-top: 5px; opacity: 0.75; }
 </style>
